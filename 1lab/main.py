@@ -12,6 +12,15 @@ def operation(first:float or int,second:float or int,operator:str):
     else:
         return "error: wrong operation string, try add/sub/mult/div"
 
+def evenList(list:[]):
+    even = []
+    for i in list:
+        if(i%2 == 0):
+            even.append(i)
+    
+    return even
+
+
 print("Part 1:")
 print("Hello world")
 
@@ -23,3 +32,12 @@ operator = input(str)
 
 print("The result of operation: ", operation(first,second,operator))
 
+print("Part 3:")
+n = int(input("Enter numbers quantity: "))
+list = []
+
+print("Enter numbers:")
+for i in range(n):
+    list.append(int(input(int)))
+
+print("Even numbers list:", evenList(list))
