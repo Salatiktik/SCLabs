@@ -13,7 +13,7 @@ def operation(first:float or int,second:float or int,operator:str):
     else:
         return "error: wrong operation string, try add/sub/mult/div"
 
-print("enter first, second numbers and operation add/sub/mult/div\n")
+print("\nenter first, second numbers and operation add/sub/mult/div:")
 first = int(input(int))
 second = int(input(int))
 operator = input(str)
