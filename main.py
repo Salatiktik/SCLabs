@@ -26,6 +26,7 @@ print("Hello world")
 
 print("Part 2:")
 print("\nenter first, second numbers and operation add/sub/mult/div:")
+
 first = int(input(int))
 second = int(input(int))
 operator = input(str)
