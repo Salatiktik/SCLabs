@@ -1,18 +1,58 @@
 from textStats import text_check,sentence_count,declarative_sentence_count,average_words_length,average_sentences_length, top_ngramm
+from constants import K,N
+from texts import TEXTS
 
-text = """Recently I've seen a film called Wonder. 
-This film made me think a lot. The main character is a 10-years old boy who was born 
-with a face deformity. The plot tells us his story of learning how to live in the 
-society. A famous american actress Mrs. Julia Roberts plays a role of boy's mother. She 
-is very sensible and always ready to support her son. The film has not a lot of 
-special effects but its main effect is that he makes people think. J.P.Roberts...
-At 10 p.m. I would like to eat something spicy!
-Also i would like to tell you about many things. Butterflies, puzzles, etc. And this is cool!
-"""
+def main():
+    option = input("Choose option:\n\t1)One of the prepeared texts\n\t2)Your text\n\nInput option:")
+    if option=="1":
+        textNum = input("Choose text number:1-3\n\nInput number:")
+        if(textNum.isdigit() and int(textNum)>0 and int(textNum) <= len(TEXTS)):
+            text = text_check(TEXTS[int(textNum)-1])
+        else:
+            print("You choosed wrong text, so text is default!")
+            text = text_check(TEXTS[0])
+    elif option == "2":
+        text = input("Input the text:")
+        if(text.isdigit() or len(text)==0):
+            print("You enter wrong text, so text is default!")
+            text = text_check(TEXTS[0])
+    else:
+        print("You enter wrong option, so text is default!")
+        text = text_check(TEXTS[0])
 
-text = text_check(text)
-print(sentence_count(text))
-print(declarative_sentence_count(text))
-print("{0:.2f}".format(average_sentences_length(text)))
-print("{0:.2f}".format(average_words_length(text)))
-top_ngramm(text,5,4)
+    option = input("Choose option:\n\t1)Default k and n values (k = 10, n = 4)\n\t2)Your own values\n\nInput option:")
+    if option=="1":
+        k = K
+        n = N
+
+    elif option == "2":
+        k = input("Enter k value:")
+        if not k.isdigit():
+            print("You enter wrong value, so k is default!")
+            k = K
+        else:
+            k = int(k)        
+
+        n = input("Enter n value:")
+        if(not n.isdigit()):
+            print("You enter wrong value, so n is default!")
+            n = N
+        else:
+            n = int(n)
+    else:
+        print("You enter wrong option, so values are default!")
+        k = K
+        n = N
+
+    print("=======================================================\n")
+    print(text)
+    print("\n=======================================================\n")
+    print("\tSentence count: ",sentence_count(text))
+    print("\tNondeclarative sentences count: ",declarative_sentence_count(text))
+    print("\tAverage sentences length: {0:.2f}".format(average_sentences_length(text)))
+    print("\tAverage words length: {0:.2f}".format(average_words_length(text)))
+    print("\tTop-{K} {N}-gramms:".format(K=k,N=n))
+    top_ngramm(text,n,k)
+
+
+main()

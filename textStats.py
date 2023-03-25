@@ -22,17 +22,16 @@ def declarative_sentence_count(text:str):
     return count
 
 def average_sentences_length(text:str):
-    return (len(text)-len(findall("[\s,\.!?]", text)))/len(findall(REGEXSENTENCE, text))    
+    return (len(text)-len(findall("[\s,\.!?]+", text)))/len(findall(REGEXSENTENCE, text))    
 
 def average_words_length(text:str):
     words = split('[,\.\s!?]+',text);
 
     for word in words:
-        if(word.isdigit()):
-            print(word)
+        if(word.isdigit() or word == ''):
             words.remove(word)
-            
-    return((len(text)-len(findall("[\s,\.!?]", text)))/len(words))
+    
+    return((len(text)-len(findall("[\s,\.!?]+", text)))/len(words))
 
 def top_ngramm(text:str,n:int,k:int):
     words = split('[,\.\s!?]+',text);
@@ -48,16 +47,11 @@ def top_ngramm(text:str,n:int,k:int):
             for i in range (0,len(word)-n):
                 n_gramms[word[i:i+n]] = n_gramms.get(word[i:i+n], 0) + 1
 
-    while(len(top_ngramms)<k):
-        max_value = max(n_gramms.values())
-        for key,v in n_gramms.items():
-            if v == max_value:
-                top_ngramms[key] = v
+    top_ngramms = sorted(n_gramms.items(), key = lambda x: x[1], reverse = True)[:k]
 
-            if (len(top_ngramms) == k):
-                break
-
-    print(top_ngramms)
+    print("\t===================")
+    for item in top_ngramms:
+        print("\t",item[0],"      ",item[1])
 
 
 
