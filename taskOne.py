@@ -1,4 +1,4 @@
-from textStats import text_check,sentence_count,declarative_sentence_count,average_words_length,average_sentences_length, top_ngramm
+from textStats import text_check,sentence_count,nondeclarative_sentence_count,average_words_length,average_sentences_length, top_ngramm
 from constants import K,N
 from texts import TEXTS
 
@@ -48,7 +48,7 @@ def task_one():
     print(text)
     print("\n=======================================================\n")
     print("\tSentence count: ",sentence_count(text))
-    print("\tNondeclarative sentences count: ",declarative_sentence_count(text))
+    print("\tNondeclarative sentences count: ",nondeclarative_sentence_count(text))
     print("\tAverage sentences length: {0:.2f}".format(average_sentences_length(text)))
     print("\tAverage words length: {0:.2f}".format(average_words_length(text)))
     print("\tTop-{K} {N}-gramms:".format(K=k,N=n))

@@ -13,25 +13,29 @@ def text_check(text:str):
 def sentence_count(text:str):
     return(len(findall(REGEXSENTENCE, text)))
 
-def declarative_sentence_count(text:str):
+def nondeclarative_sentence_count(text:str):
     count = 0
+
     for match in findall(REGEXSENTENCE, text):
-        if match[4] != '.' and match[4] != '...':
+        if match[7] != '.' and match[7] != '...' and match[7] != '':
             count+=1
 
     return count
 
 def average_sentences_length(text:str):
-    return (len(text)-len(findall("[\s,\.!?]+", text)))/len(findall(REGEXSENTENCE, text))    
+    return (len(text)-len(findall("[\s,\.!?]{1}", text)))/len(findall(REGEXSENTENCE, text))    
 
 def average_words_length(text:str):
-    words = split('[,\.\s!?]+',text);
+    words = split('[,\.\s!?]+',text)
+    textLen = len(text)
 
     for word in words:
         if(word.isdigit() or word == ''):
+            textLen=textLen-len(word)
             words.remove(word)
-    
-    return((len(text)-len(findall("[\s,\.!?]+", text)))/len(words))
+    if(len(words)==0):
+        return 0
+    return((textLen-len(findall("[\s,\.!?]{1}", text)))/len(words))
 
 def top_ngramm(text:str,n:int,k:int):
     words = split('[,\.\s!?]+',text);
@@ -52,19 +56,5 @@ def top_ngramm(text:str,n:int,k:int):
     print("\t===================")
     for item in top_ngramms:
         print("\t",item[0],"      ",item[1])
-
-
-
-
-
-
-        
-        
-
-        
-
-
-        
-
-
-        
+  
+ 
