@@ -1,4 +1,4 @@
-from serializer.constants import PRIMITIVES, COLLECTIONS
+from constants import PRIMITIVES, COLLECTIONS
 import inspect
 import types
 
