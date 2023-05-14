@@ -1,6 +1,5 @@
 from json_utils import Json
-##import MySerializer.xml_utils as Xml
-from utils import check
+from xml_utils import Xml
 
 class MySerializer:
     @staticmethod
@@ -9,7 +8,7 @@ class MySerializer:
             return Json()
 
         elif format == ".xml":
-            return Xml
+            return Xml()
 
         else:
             raise Exception("Wrong format")    
