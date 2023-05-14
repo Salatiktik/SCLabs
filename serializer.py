@@ -20,3 +20,8 @@ def main():
 
     from_serializer = MySerializer.create(args.format_from)
     to_serializer = MySerializer.create(args.format_to)
+
+    with open(args.file_from) as file:
+        obj = from_serializer.load(file)
+        with open(args.file_to, "w") as output_file:
+            to_serializer.dump(obj, output_file)

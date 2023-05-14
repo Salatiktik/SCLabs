@@ -1,7 +1,7 @@
 import inspect
 import builtins
 import types
-from constants import PRIMITIVES
+from MySerializer.constants import PRIMITIVES
 from types import FunctionType, LambdaType, CodeType
 
 def is_function(obj):
