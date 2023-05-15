@@ -42,8 +42,7 @@ def pack_function(obj, cls=None):
     if inspect.ismethod(obj):
         obj = obj.__func__
 
-    obj.__name__ = obj.__name__.replace('>', '')
-    result["__name__"] = obj.__name__.replace('<', '')
+    result["__name__"] = obj.__name__
 
     globs = get_global_vars(obj, cls)
     result["__globals__"] = pack_iterable(globs)
@@ -52,8 +51,6 @@ def pack_function(obj, cls=None):
 
     for (key, value) in inspect.getmembers(obj.__code__):
         if key.startswith("co_"):
-            if key == "co_lines":
-                continue
             if isinstance(value, bytes):
                 value = list(value)
 
@@ -62,6 +59,7 @@ def pack_function(obj, cls=None):
 
                 for val in value:
                     if val is not None:
+                        print(key, val)
                         packed_vals.append(pack(val))
 
                     else:
@@ -123,7 +121,7 @@ def pack_iterable(obj):
 
 
 def pack_inner_func(obj):   
-    return pack_function(FunctionType(obj, {}))
+    return pack_function(FunctionType(obj,{}))
 
 
 def pack_class(obj):

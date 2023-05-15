@@ -5,7 +5,6 @@ from MySerializer.unpack_utils import unpack
 
 class Xml:
     def __init__(self):
-        self._dict_counter = 0
         self.pos = 0
         self.indent = 0
 
@@ -15,27 +14,28 @@ class Xml:
     def dump(self, obj, file):
         file.write(self.dumps(obj))
 
-    def serialize_to_str(self, object):
-        if isinstance(object, PRIMITIVES):
-            return self.serialize_primitive(object)
+    def serialize_to_str(self, obj):
+        if type(obj) in PRIMITIVES:
+            return self.serialize_primitive(obj)
 
-        elif isinstance(object, (list, tuple, set)):
-            return self.serialize_collection(object)
-
-        elif isinstance(object, dict):
-            return self.serialize_dict(object)
+        elif type(obj) is dict:
+            return self.serialize_dict(obj)
+        
+        elif type(obj) in COLLECTIONS:
+            return self.serialize_collection(obj)
 
         else:
             raise Exception("Unknown type to serialize")
+
 
     def serialize_dict(self, obj):
         result = f'<"{type(obj).__name__}">\n'
         self.indent += 4
 
         for key, value in obj.items():
-            result += ' ' * self.indent + f'<{self.serialize_to_str(key)}>\n'
+            result += ' ' * self.indent + f'<{self.serialize_to_str(pack(key))}>\n'
             self.indent += 4
-            result += ' ' * self.indent + f'{self.serialize_to_str(value)}' + '\n'
+            result += ' ' * self.indent + f'{self.serialize_to_str(pack(value))}' + '\n'
             self.indent -= 4
             result += ' ' * self.indent + f'</{type(key).__name__}>' + '\n'
 
@@ -70,7 +70,7 @@ class Xml:
         self.indent += 4
 
         for i in obj:
-                result += ' ' * self.indent + f'{self.serialize_to_str(i)}\n'
+                result += ' ' * self.indent + f'{self.serialize_to_str(pack(i))}\n'
 
         self.indent -= 4
         result += ' ' * self.indent + f'</"{type(obj).__name__}">'
@@ -119,7 +119,6 @@ class Xml:
             return self.deserialize_str(string)
 
         if string[self.pos:self.pos + len('"dict"')] == '"dict"':
-            self._dict_counter += 1
             self.pos += len('"dict"')
 
             return self.deserialize_dict(string)
