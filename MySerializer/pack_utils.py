@@ -16,7 +16,7 @@ def is_iterable(obj):
 def pack(obj):
     if isinstance(obj, PRIMITIVES):
         return obj
-
+    
     elif isinstance(obj, COLLECTIONS):
         return obj
 
@@ -24,7 +24,7 @@ def pack(obj):
         return pack_function(obj)
 
     elif inspect.iscode(obj):
-        return pack_inner_func(obj)
+        return pack_code(obj)
 
     elif inspect.isclass(obj):
         return pack_class(obj)
@@ -47,6 +47,7 @@ def pack_function(obj, cls=None):
     globs = get_global_vars(obj, cls)
     result["__globals__"] = pack_iterable(globs)
 
+    
     arguments = {}
 
     for (key, value) in inspect.getmembers(obj.__code__):
@@ -59,7 +60,6 @@ def pack_function(obj, cls=None):
 
                 for val in value:
                     if val is not None:
-                        print(key, val)
                         packed_vals.append(pack(val))
 
                     else:
@@ -97,7 +97,7 @@ def get_global_vars(func, cls):
 
 
 def pack_iterable(obj):
-    if isinstance(obj, list) or isinstance(obj, tuple) or isinstance(obj, set):
+    if isinstance(obj, list) or isinstance(obj, tuple) or isinstance(obj, set) or isinstance(obj, bytes):
         packed_iterable = []
 
         for value in obj:
@@ -120,8 +120,16 @@ def pack_iterable(obj):
         return packed_dict
 
 
-def pack_inner_func(obj):   
-    return pack_function(FunctionType(obj,{}))
+def pack_code(obj):   
+    result = {"__type__":"code"}
+
+    for key, value in inspect.getmembers(obj):
+        if not key.startswith("co"):
+            continue
+
+        result[key] = pack(value)
+
+    return result
 
 
 def pack_class(obj):

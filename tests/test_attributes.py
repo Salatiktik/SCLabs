@@ -6,15 +6,16 @@ def fooMath(a):
 def foo(a,b):
     return a+b
 
+def closure(a):
+    def inner(a):
+        return 0
+    return inner
+
 def decorator(func):
     def _wraper(*args, **kargs):
         func(*args, **kargs)
         return 0
     return _wraper
-
-@decorator
-def foo2(a,b):
-    return
 
 def gen(a):
     yield a

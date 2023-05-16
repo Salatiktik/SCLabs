@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="SalatikSer",
-    version="1.1.0",
+    version="1.2.0",
     description="JSON and XLM serializer",
     author="Daniil Litvinets",
     author_email="salatik.dan@gmail.com",

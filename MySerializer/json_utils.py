@@ -205,7 +205,6 @@ class Json:
 
         self.pos = s.find('}', self.pos + 1) + 1
 
-        print("res = ", res)
         return res
 
     def deserialize_collection(self, s, s_type):

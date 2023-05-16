@@ -24,6 +24,9 @@ def unpack(src):
 
         elif "class" in src.values():
             return unpack_class(src)
+        
+        elif "code" in src.values():
+            return unpack_code(src)
 
         else:
             return unpack_iterable(src)
@@ -49,6 +52,31 @@ def unpack_class(obj):
 
     return result
 
+def unpack_code(obj):
+    attrs = {}
+
+    for key, value in obj.items():
+        attrs[key] = unpack(value)
+
+    result = CodeType(attrs['co_argcount'],
+                     attrs['co_posonlyargcount'],
+                     attrs['co_kwonlyargcount'],
+                     attrs['co_nlocals'],
+                     attrs['co_stacksize'],
+                     attrs['co_flags'],
+                     bytes(attrs['co_code']),
+                     tuple(unpack(attrs['co_consts'])),
+                     tuple(attrs['co_names']),
+                     tuple(attrs['co_varnames']),
+                     attrs['co_filename'],
+                     attrs['co_name'],
+                     attrs['co_firstlineno'],
+                     bytes(attrs['co_lnotab']),
+                     tuple(attrs['co_freevars']),
+                     tuple(attrs['co_cellvars']))
+
+    return result
+
 def unpack_object(obj):
     obj_class = unpack(obj["__class__"])
     attrs = {}
@@ -64,12 +92,13 @@ def unpack_object(obj):
 def unpack_function(src):
     arguments = src["__args__"]
     globs = src["__globals__"]
-    globs["__builtins__"] = builtins
+    globs["__builtins__"] = __builtins__
 
     for key in src["__globals__"]:
         if key in arguments["co_names"]:
             try:
                 globs[key] = __import__(src["__globals__"][key])
+
             except:
                 if globs[key] != src["__name__"]:
                     globs[key] = unpack(src["__globals__"][key])
@@ -81,7 +110,7 @@ def unpack_function(src):
                      arguments['co_stacksize'],
                      arguments['co_flags'],
                      bytes(arguments['co_code']),
-                     tuple(arguments['co_consts']),
+                     tuple(unpack(arguments['co_consts'])),
                      tuple(arguments['co_names']),
                      tuple(arguments['co_varnames']),
                      arguments['co_filename'],
