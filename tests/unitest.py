@@ -1,7 +1,7 @@
 import unittest
 import math
 from MySerializer.MySerializer import MySerializer
-from test_attributes import foo,gen,lam,first,rec, A,B,firstIn,fooMath,closure,decorator
+from test_attributes import foo,gen,lam,first,rec, A,B,firstIn,fooMath,closure
 import inspect
 
 class JsonTests(unittest.TestCase):
@@ -15,10 +15,7 @@ class JsonTests(unittest.TestCase):
         self.assertEqual(first(1),ser.loads(ser.dumps(first))(1))
         self.assertEqual(rec(4),ser.loads(ser.dumps(rec))(4))
         self.assertEqual(firstIn(4),ser.loads(ser.dumps(firstIn))(4))
-
-        obj = closure
-        new_obj = ser.loads(ser.dumps(obj))
-        self.assertEqual(obj(0)(0),new_obj(0)(0))
+        self.assertEqual(closure(0)(0),ser.loads(ser.dumps(closure))(0)(0))
 
     def test_json_primitive(self):
         ser = MySerializer.createSerializer(".json")
@@ -85,10 +82,10 @@ class JsonTests(unittest.TestCase):
     def test_json_to_file(self):
         obj = 1
         ser = MySerializer.createSerializer('.json')
-        with open("./tests/test.json", "w+") as output_file:
+        with open("test.json", "w+") as output_file:
             ser.dump(obj, output_file)
 
-        with open("./tests/test.json", "r+") as f:
+        with open("test.json", "r+") as f:
             new_obj = ser.load(f)
         
         self.assertEqual(obj, new_obj)
@@ -120,13 +117,15 @@ class XmlTests(unittest.TestCase):
         self.assertEqual(obj,ser.loads(ser.dumps(obj)))
 
     def test_xml_func(self):        
-        ser = MySerializer.createSerializer(".xml")
+        ser = MySerializer.createSerializer(".json")
         self.assertEqual(foo(2,2),ser.loads(ser.dumps(foo))(2,2))
         for i,k in zip(gen(1),ser.loads(ser.dumps(gen))(1)):
             self.assertEqual(i,k)  
         self.assertEqual(lam(1),ser.loads(ser.dumps(lam))(1))
         self.assertEqual(first(1),ser.loads(ser.dumps(first))(1))
         self.assertEqual(rec(4),ser.loads(ser.dumps(rec))(4))
+        self.assertEqual(firstIn(4),ser.loads(ser.dumps(firstIn))(4))
+        
 
     def test_xml_func_with_lib(self):
         ser = MySerializer.createSerializer(".json")
@@ -166,14 +165,14 @@ class XmlTests(unittest.TestCase):
         self.assertEqual(a.b_func(),b.b_func())
 
     def test_xml_to_file(self):
-        obj = "Hi"
+        obj = "Pup"
         ser = MySerializer.createSerializer('.xml')
-        with open("./tests/test.xml", "w+") as output_file:
+        with open("test.xml", "w+") as output_file:
             ser.dump(obj, output_file)
 
-        with open("./tests/test.xml", "r+") as f:
+        with open("test.xml", "r+") as f:
             new_obj = ser.load(f)
-        
+
         self.assertEqual(obj, new_obj)
 
 unittest.main()

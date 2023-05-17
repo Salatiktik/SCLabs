@@ -96,7 +96,7 @@ class Json:
         self.pos = string.find('"type":', self.pos)
 
         if self.pos != -1:
-            self.pos += len('"type": ')  # add "type" length
+            self.pos += len('"type": ')
 
         if self.pos >= len(string) or self.pos == -1:
             return

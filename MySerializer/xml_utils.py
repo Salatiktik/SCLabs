@@ -88,7 +88,7 @@ class Xml:
         self.pos = string.find('<"', self.pos)
 
         if self.pos != -1:
-            self.pos += len('<')  # add "type" length
+            self.pos += len('<')  
 
         if self.pos >= len(string) or self.pos == -1:
             return None
@@ -120,7 +120,6 @@ class Xml:
 
         if string[self.pos:self.pos + len('"dict"')] == '"dict"':
             self.pos += len('"dict"')
-
             return self.deserialize_dict(string)
 
         if string[self.pos:self.pos + len('"list"')] == '"list"' or \
@@ -171,7 +170,7 @@ class Xml:
     def deserialize_dict(self, s):
         res = {}
 
-        while self.pos < len(s) and s[self.pos:self.pos+9] != '</"dict">':
+        while self.pos < len(s) and s[self.pos:self.pos+len('</"dict">')] != '</"dict">':
             self.pos = s.find('<', self.pos)
 
             while s[self.pos+1] == '/' and s[self.pos:self.pos+9] != '</"dict">':
@@ -186,6 +185,7 @@ class Xml:
 
             if self.pos == -1:
                 return res
+
         return res
 
     def deserialize_str(self, s):
