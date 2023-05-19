@@ -38,6 +38,10 @@ def rec(a):
 class A:
     a_var = 1
 
+    @property
+    def prop_test(self):
+        return 0
+
     def a_func(self):
         return "a"
     
@@ -47,4 +51,3 @@ class A:
 class B(A):
     def b_func(self):
         return "b"
-    

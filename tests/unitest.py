@@ -17,6 +17,7 @@ class JsonTests(unittest.TestCase):
         self.assertEqual(firstIn(4),ser.loads(ser.dumps(firstIn))(4))
         self.assertEqual(closure(0)(0),ser.loads(ser.dumps(closure))(0)(0))
 
+
     def test_json_primitive(self):
         ser = MySerializer.createSerializer(".json")
         obj = 1
