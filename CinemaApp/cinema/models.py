@@ -84,3 +84,6 @@ class SessionSeat(models.Model):
     is_occupied = models.BooleanField(default=False)
     seat = models.ForeignKey(Seat,  related_name="seats", on_delete=models.CASCADE)
     session = models.ForeignKey(Session, related_name="session_seats" ,on_delete=models.CASCADE)
+
+class Ticket(models.Model):
+    SessionSeat = models.OneToOneField(SessionSeat, related_name="ticket")
