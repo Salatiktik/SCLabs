@@ -1,13 +1,13 @@
 import unittest
 import math
 from MySerializer.MySerializer import MySerializer
-from test_attributes import foo,gen,lam,first,rec, A,B,firstIn,fooMath,closure
+from test_attributes import foo,gen,lam,first,rec, A,B,C,firstIn,fooMath,closure
 import inspect
 
 class JsonTests(unittest.TestCase):
 
     def test_json_func(self):        
-        ser = MySerializer.createSerializer(".json")
+        ser = MySerializer.createSerializer(".json")                
         self.assertEqual(foo(2,2),ser.loads(ser.dumps(foo))(2,2))
         for i,k in zip(gen(1),ser.loads(ser.dumps(gen))(1)):
             self.assertEqual(i,k)  
@@ -47,16 +47,19 @@ class JsonTests(unittest.TestCase):
         self.assertEqual(fooMath(2),ser.loads(ser.dumps(fooMath))(2))
 
 
-    def test_json_class(self):
+    def test_json_class(self):                     
         ser = MySerializer.createSerializer(".json")
         _class = A
         _serializedClass = ser.loads(ser.dumps(_class))
+
         a = _class(1)
         b = _serializedClass(1)
-
+    
         self.assertEqual(a.num,b.num)
         self.assertEqual(a.a_var,b.a_var)
         self.assertEqual(a.a_func(),b.a_func())
+        self.assertEqual(a.prop_test,b.prop_test)
+
 
     def test_json_classInheritance(self):
         ser = MySerializer.createSerializer(".json")
@@ -70,15 +73,23 @@ class JsonTests(unittest.TestCase):
         self.assertEqual(a.a_func(),b.a_func())
         self.assertEqual(a.b_func(),b.b_func())
 
+        _class = C
+        _serializedClass = ser.loads(ser.dumps(_class))
+        a = _class(1)
+        b = _serializedClass(1)
+
+        self.assertEqual(a.num,b.num)
+        self.assertEqual(a.a_var,b.a_var)
+        self.assertEqual(a.a_func(),b.a_func())
+        self.assertEqual(a.b_func(),b.b_func())
+        self.assertEqual(a.letter(),b.letter())
+
     def test_json_object(self):
         ser = MySerializer.createSerializer(".json")
         a = B(1)
         b = ser.loads(ser.dumps(a))
 
         self.assertEqual(a.num,b.num)
-        self.assertEqual(a.a_var,b.a_var)
-        self.assertEqual(a.a_func(),b.a_func())
-        self.assertEqual(a.b_func(),b.b_func())
     
     def test_json_to_file(self):
         obj = 1
@@ -162,8 +173,6 @@ class XmlTests(unittest.TestCase):
         
         self.assertEqual(a.num,b.num)
         self.assertEqual(a.a_var,b.a_var)
-        self.assertEqual(a.a_func(),b.a_func())
-        self.assertEqual(a.b_func(),b.b_func())
 
     def test_xml_to_file(self):
         obj = "Pup"

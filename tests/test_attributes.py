@@ -38,16 +38,29 @@ def rec(a):
 class A:
     a_var = 1
 
-    @property
-    def prop_test(self):
-        return 0
-
     def a_func(self):
         return "a"
     
+    def letter(self):
+        return "a"
+
     def __init__(self,num):
         self.num = num
+
+    @property
+    def prop_test(self):
+        return self.num
     
 class B(A):
+    def letter(self):
+        return "c"
+    
     def b_func(self):
         return "b"
+
+class D(A):
+    def letter(self):
+        return "d"
+
+class C(B,D):
+    pass

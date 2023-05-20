@@ -162,9 +162,8 @@ def pack_class(obj):
 
 def pack_object(obj):
     result = {"__type__": "object", "__class__": pack_class(obj.__class__), "attr": {}}
-
     for key, value in inspect.getmembers(obj):
-        if not key.startswith("__") and not is_function(value):
+        if not key.startswith("__"):
             result["attr"][key] = pack(value)
 
     return result

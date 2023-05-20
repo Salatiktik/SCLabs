@@ -81,11 +81,16 @@ def unpack_object(obj):
     obj_class = unpack(obj["__class__"])
     attrs = {}
 
+
     for key, value in obj["attr"].items():
         attrs[key] = unpack(value)
 
-    result = object.__new__(obj_class)
-    result.__dict__ = attrs
+    if "property" in obj_class.__name__:
+        obj_class = property
+        result = property(fget=attrs["fget"],fset=attrs["fset"],fdel=attrs["fdel"])
+    else:
+        result = object.__new__(obj_class)
+        result.__dict__ = attrs
 
     return result
 
