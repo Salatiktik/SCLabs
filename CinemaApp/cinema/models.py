@@ -1,6 +1,9 @@
 from django.db import models
+from django.contrib.auth import get_user_model
 
 # Create your models here.
+
+User = get_user_model()
 
 class Genre(models.Model):
     name = models.CharField(max_length=30)
@@ -86,4 +89,12 @@ class SessionSeat(models.Model):
     session = models.ForeignKey(Session, related_name="session_seats" ,on_delete=models.CASCADE)
 
 class Ticket(models.Model):
-    SessionSeat = models.OneToOneField(SessionSeat, related_name="ticket")
+    SessionSeat = models.OneToOneField(SessionSeat, related_name="ticket", on_delete=models.CASCADE)
+
+class Profile(models.Model):
+    user = models.OneToOneField(
+        User, 
+        on_delete=models.CASCADE, 
+        related_name='profile'
+    )
+    tickets = models.ManyToOneRel(Ticket,to=Ticket,field_name="tickets",related_name="user",on_delete=models.CASCADE)

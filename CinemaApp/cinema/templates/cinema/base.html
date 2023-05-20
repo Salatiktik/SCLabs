@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://fonts.cdnfonts.com/css/din-pro-cond" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title%}Title{% endblock%}</title>
+</head>
+<style>
+    .header{
+        width: 100%;
+        background-color:#282828;
+        display: flex;
+        justify-content: space-between;
+    }
+    body{
+        font-family:'DIN Pro Regular', sans-serif;
+        padding: 0;
+        margin: 0;
+        
+    }
+    .headerBlock{
+        width: fit-content;
+        display: flex;
+        justify-content: start;
+    }
+    .link{
+        color: #f5f5f5;
+        font-size: 15pt;
+        display: flex;
+        margin: 20px;
+        text-decoration: none;
+    }
+    .formTitle{
+        font-size: 30pt;
+        color: #f5f5f5;
+        display: flex;
+    }
+    .nonHeaderLink{
+        color: #282828;
+        text-decoration: none;
+    }
+
+
+    #id_username,#id_password,#id_passwordConfirm,#id_email,.input{
+        height: 25px;
+        border-radius: 7.5px;
+        width: 300px;
+        margin: 10px;
+        border: none;
+        font-family:'DIN Pro Regular', sans-serif;
+        font-size: 20px;
+        color: #464646;
+        padding: 5px;
+    }
+
+    .wrapper{
+        align-items: center;
+        margin: 30px;
+        width: fit-content;
+        display: flex;
+        flex-direction: column;
+        padding: 20px;
+        border-radius: 20px;
+        background-color: #00583f7c;
+    }
+    .container{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .button{
+        width: fit-content;
+        padding: 6px 30px;
+        font-size: 12pt;
+        background-color: #f5f5f5;
+        color: #464646;
+        border-radius: 10px;
+        border: none;
+    }
+    .detailText{
+        font-size: 12px;
+        color: #f5f5f5;
+        margin: 10px 10px 0px 10px;
+        align-self: flex-start;
+    }
+
+</style>
+<body>
+    <div class="header">
+        <div class="headerBlock">
+            <a class="link" href="/home">Home</a>
+            <a class="link" href="/sessions">Sessions</a>
+        </div>
+        <div class="headerBlock">
+            <a class="link" href="/login">Login</a>
+            <a class="link" href="/sign-up">Sign up</a>
+        </div>
+    </div>
+    <div class="container">
+        {%block content%}
+        {% endblock%}
+    </div>
+</body>
+</html>
