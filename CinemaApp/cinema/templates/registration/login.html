@@ -10,14 +10,15 @@
         {{form.username}}
         <div class="detailText">Password:</div>
         {{form.password}}
+        <div class="errorMessage">{{error}}</div>
+        <div class="errorMessage">
+            {% for i in error %}
+            {{i}}
+            {% endfor %}
+        </div>
         <button class ="button" type="submit">Login</button>
         <p>Dont have an account? Create a new one <a class ="nonHeaderLink" href="/sign-up">Here</a>
         </p>
     </div>
 </form>
 {% endblock %}
-
-#id_id_username
-{
-    color:red;
-}

@@ -13,7 +13,13 @@
         {{form.password}}
         <div class="detailText">Confirm password:</div>
         {{form.passwordConfirm}}
-        <button class = "button" type="submit">Confirm Registration</button>
+        <div class="errorMessage">
+            {% for i in error %}
+            {{i}}
+            {% endfor %}
+        </div>
+        
+        <button class = "button" type="submit">Confirm</button>
         <p>Already have an account? So just login <a class ="nonHeaderLink" href="/login">Here</a>
         </p>
     </div>

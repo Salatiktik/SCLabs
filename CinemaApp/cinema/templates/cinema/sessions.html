@@ -1,0 +1,36 @@
+{% extends 'cinema/base.html' %}
+{% block title %}Sessions page{% endblock %}
+{% block content %}
+<div>
+    <div class = "pageTitle">Sessions</div>
+    {% for day in sessions%}
+        <div class = "dateSession">{{day.0.0.startTime.date}}</div>
+        {% for movie in day %}
+        <div class="dateSessionWrapper">
+            <a class="nonHeaderLink" href="/movie">
+                <div class="sessionMovieTitle">
+                    {{movie.0.movie}}
+                </div>
+             </a>
+            {% for session in movie%}
+                {% if user.is_authenticated %}
+                <a href="{% url 'session' session_id=session.id %}">
+                    <button class="sessionButton">
+                        {{session.startTime.time.hour}}:{%if session.startTime.time.minute == 0 %}00{%else%}{{session.startTime.time.minute}}{%endif%} /
+                        {{session.type}}
+                    </button>
+                </a>
+                {% else %}
+                <a href="/login">
+                    <button class="sessionButton">
+                        {{session.startTime.time.hour}}:{%if session.startTime.time.minute == 0 %}00{%else%}{{session.startTime.time.minute}}{%endif%} /
+                        {{session.type}}
+                    </button>
+                </a>
+                {% endif %}
+            {%endfor%}
+        </div>
+        {% endfor %}
+    {% endfor %}
+</div>
+{% endblock %}

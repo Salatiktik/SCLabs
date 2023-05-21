@@ -1,0 +1,9 @@
+{% extends 'cinema/base.html' %}
+{% block title %}Session page{% endblock %}
+{% block content %}
+<div>
+    <div class = "pageTitle">{{movie}}:{{session.type}}</div>
+    <img src = "{{ MEDIA_ROOT }}/{{ posterUrl }}"/>
+    <div class = "dateSession">{{session.startTime}}</div>
+</div>
+{% endblock %}
