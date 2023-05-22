@@ -1,7 +1,7 @@
 import requests
 from django.shortcuts import render, redirect
 from django.http import Http404
-from .forms import LoginForm, SignUpForm
+from .forms import LoginForm, SignUpForm, TicketsBuyForm
 from .models import Session, Movie, Seat, SessionSeat
 from django.views import View
 from django.contrib.auth import login, logout, authenticate
@@ -88,11 +88,30 @@ class SessionView(View):
     def get(self, req, *args,session_id, **kwargs):
         session = Session.objects.get(id=session_id)
         hall = session.hall
-        seats = Seat.objects.filter(hall=hall)
+        seats = Seat.objects.filter(hall=hall).order_by('number','row')
         sessionSeats = []
+        seatsClear = [[] for x in range(seats[len(seats)-1].row)]
+        print(seatsClear)
         for i in range(len(seats)):
             if(SessionSeat.objects.filter(session=session,seat=seats[i])):
                 sessionSeats.append(SessionSeat.objects.get(session=session,seat=seats[i]))
+                seatsClear[seats[i].row-1].append(sessionSeats[len(sessionSeats)-1])
+                print(seatsClear[seats[i].row-1])
+                continue
+
+
+            seatsClear[seats[i].row-1].append(seats[i])
+
         movie = session.movie
         print(movie.poster.url)
-        return render(req,'cinema/session.html',{"session":session,"hall":hall,"seats":seats,"sessionSeats":sessionSeats,"movie":movie,"posterUrl":movie.poster.url})
+        return render(req,'cinema/session.html',{"session":session,"hall":hall,"seats":seatsClear,"sessionSeats":sessionSeats,"movie":movie,"posterUrl":movie.poster.url})
+    
+class MovieView(View):
+    def get(self, req, *args, movie_id, **kwargs):
+        return render()
+
+class TicketView(View):
+    def get(sel, req, *args, session_id, seat_id, **kwargs):
+        session = Session.objects.get(id=session_id)
+        seat = Seat.objects.get(id=seat_id)
+        return render(req,'cinema/ticket.html',{"session":session,"seat":seat})

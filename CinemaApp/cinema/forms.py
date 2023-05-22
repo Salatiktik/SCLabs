@@ -22,3 +22,6 @@ class SignUpForm(forms.Form):
 
         return cd
 
+class TicketsBuyForm(forms.Form):
+    seats = forms.MultipleChoiceField()
+

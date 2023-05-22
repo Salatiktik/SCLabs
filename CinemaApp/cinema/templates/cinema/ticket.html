@@ -1,0 +1,12 @@
+{% extends 'cinema/base.html' %}
+{% block title %}Ticket confirmation page{% endblock %}
+{% block content %}
+<div>
+    <form method="post">
+        {%csrf_token%}
+        <div class = "pageTitle">Ticket confirmation</div>
+        <div class = "dateSession">{{session.startTime}}</div>
+        <button type="submit">Submit</button>
+    </form>
+</div>
+{% endblock %}

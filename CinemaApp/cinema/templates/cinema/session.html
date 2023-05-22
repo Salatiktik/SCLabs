@@ -3,7 +3,24 @@
 {% block content %}
 <div>
     <div class = "pageTitle">{{movie}}:{{session.type}}</div>
-    <img src = "{{ MEDIA_ROOT }}/{{ posterUrl }}"/>
     <div class = "dateSession">{{session.startTime}}</div>
+    <div class = "seatsBlock">
+        <div class="holeName">{{session.hall.name}}</div>
+        {%for row in seats%}
+        <div class = "seatsRow">
+            <div class="rowMark">{{row.0.row}} row</div>
+            {%for seat in row%}
+                {%if seat.is_occupied%}
+                <div class="occupiedSeat">{{seat.seat.number}}</div>
+                {%else %}
+                <a class="nonHeaderLink" href="{% url 'ticket_confirmation' session_id=session.id seat_id=seat.id%}">
+                    <div class="seat">{{seat.number}}</div>
+                </a>
+                {%endif%}
+            {%endfor%}
+            <div class="rowMark">{{row.0.row}} row</div>
+        </div>
+        {%endfor%}
+    </div>
 </div>
 {% endblock %}
