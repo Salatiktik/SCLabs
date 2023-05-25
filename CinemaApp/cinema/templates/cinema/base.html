@@ -19,6 +19,7 @@
         padding: 0;
         margin: 0;
         background-color: #edfff4;
+        color:#292929;
         
     }
     .headerBlock{
@@ -124,7 +125,7 @@
         padding: 20px;
     }
 
-    .dateSession{
+    .ticketData,.dateSession{
         font-family: 'DIN Pro Bold', sans-serif;
         font-size: 20pt;
     }
@@ -136,7 +137,11 @@
         font-family: 'DIN Pro Black', sans-serif;
         text-decoration: none;
     }
-
+    .ticketQr{
+        width: 100px;
+        height: 100px;
+        margin: 0px 0px 30px 0px;
+    }
     .sessionButton{
         width: fit-content;
         margin: 0px 10px;
@@ -199,7 +204,122 @@
         font-size: 8pt;
         color: #f5f5f5;
     }
-
+    .ticketCircleRow{
+        justify-content: space-between;
+        width: 400px;
+        flex-direction: row;
+        display: flex;
+    }
+    .ticketCircle{
+        background-color: #ffffff;
+        border-radius: 0px 0px 25px 25px;
+        width: 50px;
+        height: 40px;
+    }
+    .ticketCircleReverse{
+        background-color: #ffffff;
+        border-radius: 25px 25px 0px 0px;
+        width: 50px;
+        height: 40px;
+    }
+    .ticket{
+        margin: 30px;
+        padding: 0px 30px;
+        width: 400px;
+        height: 800px;
+        justify-content: space-between;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background: #97edb6;
+    }
+    .border{
+        width: 400px;
+        height: 3px;
+        background-color: #bcf1ce;
+    }
+    .ticketTitle{
+        font-family: 'DIN Pro Bold', sans-serif;
+        font-size: 40pt;
+    }
+    .information{
+        margin: 10px 0px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    .lycense{
+        margin: 0px 30px 0px 0px;
+    }
+    .profileTicket{
+        margin: 20px 0px;
+        width: 800px;
+        height: 150px;
+        background-color: #9cffbd;
+        align-items: center;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    .profileTIcketCircles{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        height: 120px;
+    }
+    .profileTicketCircle{
+        background-color: #ffffff;
+        border-radius: 0px 15px 15px 0px;
+        width: 22px;
+        height: 30px;
+    }
+    .profileTicketCircleReverse{
+        background-color: #ffffff;
+        border-radius: 15px 0px 0px 15px;
+        width: 23px;
+        height: 30px;
+    }
+    .profileTicketMovie{
+        font-size: 40pt;
+        font-family: 'DIN Pro Bold', sans-serif;
+    }
+    .profileTicketData{
+        align-items: center;
+        flex-direction: row;
+        display: flex;
+    }
+    .profileTicketDescription{
+        margin: 40px;
+        display: flex;
+        flex-direction: column;
+    }
+    .profileTicketDate{
+        font-size: 25pt;
+        font-family: 'DIN Pro Bold', sans-serif;
+    }
+    .profileTicketSeat{
+        font-size: 20pt;
+        font-family: 'DIN Pro Bold', sans-serif;
+    }
+    .ticketBody{
+        padding: 0px 30px 30px 30px;
+        width: 400px;
+        height: 450px;
+        justify-content: space-between;
+        display: flex;
+        flex-direction: column;
+    }
+    .ticketsBlock{
+        flex-direction: row;
+        min-width: 900px;
+    }
+    .ticketMovieTitle{
+        font-size: 40pt;
+        margin: 20px 0px;
+        color:#292929;
+        font-family: 'DIN Pro Black', sans-serif;
+        text-decoration: none;
+    }
 </style>
 <body>
     <div class="header">

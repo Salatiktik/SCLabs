@@ -4,9 +4,44 @@
 <div>
     <form method="post">
         {%csrf_token%}
-        <div class = "pageTitle">Ticket confirmation</div>
-        <div class = "dateSession">{{session.startTime}}</div>
-        <button type="submit">Submit</button>
+        <div class = "ticket">
+            <div class ="ticketCircleRow">
+                <div class="ticketCircle"></div>
+                <div class="ticketCircle"></div>
+                <div class="ticketCircle"></div>
+                <div class="ticketCircle"></div>
+                <div class="ticketCircle"></div>
+                <div class="ticketCircle"></div>
+            </div>
+            <div class = "ticketTitle">Ticket</div>
+            <div class = "border"></div>
+            <div class ="ticketBody">
+                <div class = "ticketMovieTitle">{{session.movie}} / {{session.type}}</div>
+                <div class = "ticketData">{{session.startTime}}</div>
+                <div class = "ticketData">Visitor: {{user.username}}</div>
+                <div class = "ticketData">Seat: {{seat.row}} row, {{seat.number}} place</div>
+                <div class = "ticketData">Seat type: {{seat.type}}</div>
+                <div class="ticketData ">Cost: {{cost}} $</div>
+                <div class="information">
+                    <div class="lycense">
+                        Green Cinema, USA, Green city, Lime drive, 53, 92101, green.cinema@gmail.com
+                    </div>
+                    <img class="qrTicket" src="{{qr.url}}">
+                </div>  
+            </div>  
+            
+            <div class = "border"></div>
+            <button type="submit" class="button">Buy</button>
+
+            <div class ="ticketCircleRow">
+                <div class="ticketCircleReverse"></div>
+                <div class="ticketCircleReverse"></div>
+                <div class="ticketCircleReverse"></div>
+                <div class="ticketCircleReverse"></div>
+                <div class="ticketCircleReverse"></div>
+                <div class="ticketCircleReverse"></div>
+            </div>
+        </div>
     </form>
 </div>
 {% endblock %}

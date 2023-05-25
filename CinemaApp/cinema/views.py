@@ -1,7 +1,7 @@
 import requests
 from django.shortcuts import render, redirect
 from django.http import Http404
-from .forms import LoginForm, SignUpForm, TicketsBuyForm
+from .forms import LoginForm, SignUpForm
 from .models import Session, Movie, Seat, SessionSeat
 from django.views import View
 from django.contrib.auth import login, logout, authenticate
@@ -47,6 +47,7 @@ class SignUpView(View):
             user = User.objects.create_user(username=form.cleaned_data["username"],
                                             email=form.cleaned_data["email"],
                                             password=form.cleaned_data["password"])
+            Profile.objects.create(user=user)
             login(req,user)
             return redirect('/home')
         else:            
@@ -111,7 +112,21 @@ class MovieView(View):
         return render()
 
 class TicketView(View):
-    def get(sel, req, *args, session_id, seat_id, **kwargs):
+
+    def post(self,req,*args, session_id, seat_id,**kwargs):
+        SessionSeat.objects.create(seat = Seat.objects.get(id=seat_id),session=Session.objects.get(id=session_id), is_occupied = True, user = self.request.user)
+        return redirect(('/home'))
+
+    def get(self, req, *args, session_id, seat_id, **kwargs):
+        self.seat_id = seat_id
+        self.session_id = session_id
         session = Session.objects.get(id=session_id)
         seat = Seat.objects.get(id=seat_id)
-        return render(req,'cinema/ticket.html',{"session":session,"seat":seat})
+        qr = requests.get("https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=seat{0}session{1}&color=5fa278&bgcolor=97edb6".format(seat_id,session_id))
+        return render(req,'cinema/ticket.html',{"session":session,"seat":seat,"qr":qr,'cost':seat.type.rate*session.price})
+    
+class ProfileView(View):
+
+    def get(self, req, *args, **kwargs):
+        tickets = SessionSeat.objects.filter(user=self.request.user)
+        return render(req,'cinema/profile.html',{"tickets":tickets})

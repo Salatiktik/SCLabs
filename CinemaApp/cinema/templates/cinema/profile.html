@@ -1,0 +1,36 @@
+{% extends 'cinema/base.html' %}
+{% block title %}Home page{% endblock %}
+{% block content %}
+<div>
+    <div class="pageTitle">{{user.username}} tickets</div>
+    <div class="ticketsBlock">
+        {% for ticket in tickets %}
+            <div class="profileTicket">
+                <div class = "profileTIcketCircles">
+                    <div class ="profileTicketCircle"></div>
+                    <div class ="profileTicketCircle"></div>
+                    <div class ="profileTicketCircle"></div>
+                </div>
+                <div class="profileTicketData">
+                    <div class="profileTicketMovie">
+                        {{ticket.session.movie}} / {{ticket.session.type}}
+                    </div>
+                    <div class="profileTicketDescription">
+                        <div class="profileTicketDate">
+                            {{ticket.session.startTime}}
+                        </div>
+                        <div class="profileTicketSeat">
+                            {{ticket.seat}}
+                        </div>
+                    </div>
+                </div>
+                <div class = "profileTIcketCircles">
+                    <div class ="profileTicketCircleReverse"></div>
+                    <div class ="profileTicketCircleReverse"></div>
+                    <div class ="profileTicketCircleReverse"></div>
+                </div>
+            </div>
+        {%endfor%}
+        </div>
+</div>
+{% endblock %}

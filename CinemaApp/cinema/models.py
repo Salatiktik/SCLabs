@@ -64,7 +64,7 @@ class Seat(models.Model):
     )
 
     def __str__(self):
-        return f"r{self.row}n{self.number}"
+        return f"row {self.row} place {self.number}"
 
 class Session(models.Model):
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
@@ -87,14 +87,4 @@ class SessionSeat(models.Model):
     is_occupied = models.BooleanField(default=False)
     seat = models.ForeignKey(Seat,  related_name="seats", on_delete=models.CASCADE)
     session = models.ForeignKey(Session, related_name="session_seats" ,on_delete=models.CASCADE)
-
-class Ticket(models.Model):
-    SessionSeat = models.OneToOneField(SessionSeat, related_name="ticket", on_delete=models.CASCADE)
-
-class Profile(models.Model):
-    user = models.OneToOneField(
-        User, 
-        on_delete=models.CASCADE, 
-        related_name='profile'
-    )
-    tickets = models.ManyToOneRel(Ticket,to=Ticket,field_name="tickets",related_name="user",on_delete=models.CASCADE)
+    user = models.ForeignKey(User,related_name="tickets", on_delete=models.CASCADE)

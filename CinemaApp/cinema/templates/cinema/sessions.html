@@ -7,7 +7,7 @@
         <div class = "dateSession">{{day.0.0.startTime.date}}</div>
         {% for movie in day %}
         <div class="dateSessionWrapper">
-            <a class="nonHeaderLink" href="{% url 'movie' movie_id=movie.id %}">
+            <a class="nonHeaderLink" >
                 <div class="sessionMovieTitle">
                     {{movie.0.movie}}
                 </div>
