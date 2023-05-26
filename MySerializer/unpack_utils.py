@@ -2,7 +2,7 @@ import inspect
 import builtins
 import types
 from MySerializer.constants import PRIMITIVES
-from types import FunctionType, LambdaType, CodeType
+from types import FunctionType, LambdaType, CodeType, CellType, GeneratorType, ModuleType
 
 def is_function(obj):
     return inspect.isfunction(obj) or inspect.ismethod(obj) or isinstance(obj, LambdaType)
@@ -27,6 +27,9 @@ def unpack(src):
         
         elif "code" in src.values():
             return unpack_code(src)
+        
+        elif "iterator" in src.values():
+            return unpack_iterator(src)
 
         else:
             return unpack_iterable(src)
@@ -34,8 +37,15 @@ def unpack(src):
     elif is_iterable(src):
         return unpack_iterable(src)
 
+    elif "module" == src.__class__.__name__:
+        return unpack_module(src)
+
     else:
+
         raise Exception("Unknown type")
+
+def unpack_module(obj):
+    return obj
 
 def unpack_class(obj):
     class_bases = tuple(unpack_class(base) for base in obj["__bases__"])
@@ -51,6 +61,10 @@ def unpack_class(obj):
             method.__globals__.update({result.__name__: result})
 
     return result
+
+def unpack_iterator(obj):
+    for i in unpack(obj["__values__"]):
+        yield i
 
 def unpack_code(obj):
     attrs = {}
@@ -81,13 +95,14 @@ def unpack_object(obj):
     obj_class = unpack(obj["__class__"])
     attrs = {}
 
-
     for key, value in obj["attr"].items():
         attrs[key] = unpack(value)
 
     if "property" in obj_class.__name__:
         obj_class = property
         result = property(fget=attrs["fget"],fset=attrs["fset"],fdel=attrs["fdel"])
+    elif "cell" in obj_class.__name__:
+        result = CellType(attrs["cell_contents"])
     else:
         result = object.__new__(obj_class)
         result.__dict__ = attrs
@@ -116,7 +131,7 @@ def unpack_function(src):
                      arguments['co_stacksize'],
                      arguments['co_flags'],
                      bytes(arguments['co_code']),
-                     tuple(unpack(arguments['co_consts'])),
+                     tuple(arguments['co_consts']),
                      tuple(arguments['co_names']),
                      tuple(arguments['co_varnames']),
                      arguments['co_filename'],
@@ -126,7 +141,7 @@ def unpack_function(src):
                      tuple(arguments['co_freevars']),
                      tuple(arguments['co_cellvars']))
 
-    func_result = FunctionType(coded, globs)
+    func_result = FunctionType(coded, globs, closure = unpack(src["__closure__"]))
     func_result.__globals__.update({func_result.__name__: func_result})
 
     return func_result

@@ -9,6 +9,7 @@ def foo(a,b):
 def closure(a):
     def inner(a):
         return 0
+    
     return inner
 
 def gen(a):

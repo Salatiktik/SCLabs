@@ -46,6 +46,7 @@ def pack_function(obj, cls=None):
 
     globs = get_global_vars(obj, cls)
     result["__globals__"] = pack_iterable(globs)
+    result["__closure__"] = pack(obj.__closure__)
 
     
     arguments = {}
@@ -97,6 +98,7 @@ def get_global_vars(func, cls):
 
 
 def pack_iterable(obj):
+
     if isinstance(obj, list) or isinstance(obj, tuple) or isinstance(obj, set) or isinstance(obj, bytes):
         packed_iterable = []
 
@@ -118,6 +120,16 @@ def pack_iterable(obj):
             packed_dict[key] = pack(value)
 
         return packed_dict
+    
+    else:
+        result = {"__type__": "iterator"}
+        values = []
+        for i in obj:
+            values.append(pack(i))
+        
+        result["__values__"] = values
+
+        return result
 
 
 def pack_code(obj):   
@@ -162,8 +174,14 @@ def pack_class(obj):
 
 def pack_object(obj):
     result = {"__type__": "object", "__class__": pack_class(obj.__class__), "attr": {}}
-    for key, value in inspect.getmembers(obj):
-        if not key.startswith("__"):
-            result["attr"][key] = pack(value)
+    if(obj.__class__.__name__ in ["property","cell"]):
+        for key, value in inspect.getmembers(obj):
+            if not key.startswith("__"):
+                result["attr"][key] = pack(value)
+
+    else:
+        for key, value in inspect.getmembers(obj):
+            if not key.startswith("__") and not is_function(value):
+                result["attr"][key] = pack(value)
 
     return result
