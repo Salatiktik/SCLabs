@@ -1,0 +1,15 @@
+{% extends 'cinema/base.html' %}
+{% block title %}Sessions page{% endblock %}
+{% block content %}
+<div>
+    <div class = "pageTitle">Movies</div>
+    {% for movie in movies%}
+        <div class = "movieBlock">
+            <div>
+                <img src = "{{movie.poster.url}}">
+            </div>
+            {{movie}}
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}

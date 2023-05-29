@@ -111,6 +111,11 @@ class MovieView(View):
     def get(self, req, *args, movie_id, **kwargs):
         return render()
 
+class MoviesView(View):
+    def get(self, req, *args, **kwargs):
+        movies = Movie.objects.all()
+        return render(req, 'cinema/movies.html',{"movies":movies})
+
 class TicketView(View):
 
     def post(self,req,*args, session_id, seat_id,**kwargs):
