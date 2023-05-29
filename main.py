@@ -113,5 +113,24 @@ print(next(g_d))
 # f = C(1, 2)
 # print(f.my_sin(11))
 
+lam = lambda x: x+1
 
+print(lam(1))
 
+l_s = ser.dumps(lam)
+l_d = ser.loads(l_s)
+
+print(l_d(1))
+
+def fact(f):
+    if f!=1:
+        return f*fact(f-1)
+    else:
+        return 1
+
+print(fact(5))
+
+fact_s = ser.dumps(fact)
+fact_d = ser.loads(fact_s)
+
+print(fact_d(5))
