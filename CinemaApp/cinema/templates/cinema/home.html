@@ -1,5 +1,38 @@
 {% extends 'cinema/base.html' %}
 {% block title %}Home page{% endblock %}
 {% block content %}
-<div> Home </div>
+<div>
+    <div class="pageTitle">Home</div>
+    <div class="homeBlockTitle">Newest movies</div>
+    <div class = "newestMovies">
+        {%for movie in newest%}
+            <div class="homePageMovie">
+                <img src = "{{movie.poster.url}}" class="moviePoster">
+                <div class="homeMovieTitle">{{movie}}</div>
+            </div>
+        {%endfor%}
+    </div>
+    <div class="homeBlockTitle">Today's sessions</div>
+    {% for movie in day %}
+        {% if movie%}
+            
+        <div class="dateSessionWrapper">
+            <a class="nonHeaderLink" >
+                <div class="sessionMovieTitle">
+                    {{movie.0.movie}}
+                </div>
+                </a>
+            {% for session in movie%}
+                <a href="{% url 'session' session_id=session.id %}">
+                    <button class="sessionButton">
+                        {{session.startTime.hour}}:{%if session.startTime.minute == 0 %}00{%else%}{{session.startTime.minute}}{%endif%} /
+                        {{session.type}} /
+                        {{session.price}} $
+                    </button>
+                </a>
+            {%endfor%}
+        </div>
+        {% endif%}
+    {% endfor %}
+</div>
 {% endblock %}

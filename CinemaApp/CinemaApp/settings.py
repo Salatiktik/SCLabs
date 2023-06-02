@@ -76,7 +76,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'CinemaApp.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
@@ -118,7 +117,6 @@ USE_I18N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
@@ -134,3 +132,5 @@ LOGOUT_REDIRECT_URL = '/home'
 
 DATE_FORMAT = "Y-m-d"
 TIME_FORMAT = "%H:%M"
+
+FIXTURE_DIRS=(os.path.join(BASE_DIR,'fixtures'),)

@@ -3,34 +3,83 @@
 {% block content %}
 <div>
     <div class = "pageTitle">Sessions</div>
-    {% for day in sessions%}
-        <div class = "dateSession">{{day.0.0.startTime.date}}</div>
-        {% for movie in day %}
-        <div class="dateSessionWrapper">
-            <a class="nonHeaderLink" >
-                <div class="sessionMovieTitle">
-                    {{movie.0.movie}}
-                </div>
-             </a>
-            {% for session in movie%}
-                {% if user.is_authenticated %}
-                <a href="{% url 'session' session_id=session.id %}">
-                    <button class="sessionButton">
-                        {{session.startTime.time.hour}}:{%if session.startTime.time.minute == 0 %}00{%else%}{{session.startTime.time.minute}}{%endif%} /
-                        {{session.type}}
-                    </button>
-                </a>
-                {% else %}
-                <a href="/login">
-                    <button class="sessionButton">
-                        {{session.startTime.time.hour}}:{%if session.startTime.time.minute == 0 %}00{%else%}{{session.startTime.time.minute}}{%endif%} /
-                        {{session.type}}
-                    </button>
-                </a>
-                {% endif %}
-            {%endfor%}
+    <div class="sessionPage">
+        <div>
+            {% for day in sessions%}
+                <div class = "dateSession">{{day.0.0.startDate}}</div>
+                {% for movie in day %}
+                    {% if movie%}
+                        
+                    <div class="dateSessionWrapper">
+                        <a class="nonHeaderLink" >
+                            <div class="sessionMovieTitle">
+                                {{movie.0.movie}}
+                            </div>
+                         </a>
+                        {% for session in movie%}
+                            {% if user.is_authenticated %}
+                            <a href="{% url 'session' session_id=session.id %}">
+                                <button class="sessionButton">
+                                    {{session.startTime.hour}}:{%if session.startTime.minute == 0 %}00{%else%}{{session.startTime.minute}}{%endif%} /
+                                    {{session.type}} /
+                                    {{session.price}} $
+                                </button>
+                            </a>
+                            {% else %}
+                            <a href="/login">
+                                <button class="sessionButton">
+                                    {{session.startTime.hour}}:{%if session.startTime.minute == 0 %}00{%else%}{{session.startTime.minute}}{%endif%} /
+                                    {{session.type}} / 
+                                    {{session.price}} $
+                                </button>
+                            </a>
+                            {% endif %}
+                        {%endfor%}
+                    </div>
+                    {% endif%}
+                {% endfor %}
+            {% endfor %}
         </div>
-        {% endfor %}
-    {% endfor %}
+
+        <form method="get" class="filterWrapper" id="filterForm">
+            <div class="priceFilter">
+                <div class="detailTextDark">Price</div>
+                <div class="inputBlock">
+                    <div class="inputDescription">from:</div> 
+                    <input type="number" name="pfrom" id="filterInput" step = '0.01' value="{{pfrom}}" min="0">
+                </div>
+                <div class="inputBlock">
+                    <div class="inputDescription">to:</div>
+                    <input type="number" name="pto" id="filterInput" step = '0.01' value="{{pto}}" min="0">
+                </div>
+            </div>
+            <div class="filterSeparator"></div>
+            <div class="formatFilter">
+                <div class="detailTextDark">Format</div>
+                <div class="inputBlock">
+                    <div class="inputDescription">Any:</div>
+                    <input id="formatChoise1" type="radio" name="formatAny" id="filterInput">
+                    <div class="inputDescription">2D:</div>
+                    <input id="formatChoise2" type="radio" name="format2D" id="filterInput">
+                    <div class="inputDescription">3D:</div>
+                    <input id="formatChoise3" type="radio" name="format3D" id="filterInput">
+                </div>
+            </div>
+            <div class="filterSeparator"></div>
+            <div class="dateFilter">
+                <div class="detailTextDark">Date</div>
+                <div class="inputBlock">
+                    <div class ="inputDescription">Date:</div>
+                    <input type="date" name="date" id="filterInput" value="{{date}}">
+                </div>
+            </div>
+            <div class="inputBlock">
+                <input type="submit" value="Filter" id="filterButton">
+                <a href = "/sessions" id="filterButton">
+                    Reset
+                </a>
+            </div>
+        </form>
+    </div>
 </div>
 {% endblock %}

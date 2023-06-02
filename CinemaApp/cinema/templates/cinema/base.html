@@ -8,12 +8,6 @@
     <title>{% block title%}Title{% endblock%}</title>
 </head>
 <style>
-    .header{
-        width: 100%;
-        background-color:#282828;
-        display: flex;
-        justify-content: space-between;
-    }
     body{
         font-family:'DIN Pro Regular', sans-serif;
         padding: 0;
@@ -22,6 +16,14 @@
         color:#292929;
         
     }
+
+    .header{
+        width: 100%;
+        background-color:#282828;
+        display: flex;
+        justify-content: space-between;
+    }
+
     .headerBlock{
         width: fit-content;
         display: flex;
@@ -102,6 +104,12 @@
         margin: 10px 10px 0px 10px;
         align-self: flex-start;
     }
+    .detailTextDark{
+        font-size: 14px;
+        font-family: 'DIN Pro Bold';
+        margin: 10px 10px 0px 10px;
+        align-self: flex-start;
+    }
     .marckedLink{
         color: #9cffbd;
         font-size: 15pt;
@@ -117,7 +125,7 @@
     }
     .dateSessionWrapper{
         border-radius: 20px;
-        min-width: 900px;
+        min-width: 700px;
         background-color: #bcf1ce;
         flex-direction: row;
         display: flex;
@@ -293,7 +301,7 @@
         display: flex;
         flex-direction: column;
     }
-    .profileTicketDate{
+    .profileTicketDate,.rating{
         font-size: 25pt;
         font-family: 'DIN Pro Bold', sans-serif;
     }
@@ -319,6 +327,143 @@
         color:#292929;
         font-family: 'DIN Pro Black', sans-serif;
         text-decoration: none;
+    }
+    .moviePoster{
+        width: 200px;
+        height: 300px;
+        border-radius: 10px;
+    }
+    .movieDescription{
+        background-color: #edfff4;
+        border-radius: 10px;
+        padding: 10px;
+        width: 550px;
+        display: flex;
+        flex-direction: column;
+    }
+    .movieBlock{
+        width: 900px;
+        border-radius: 20px;
+        padding: 20px;
+        margin: 20px 0px;
+        background-color: #edfff4;
+        flex-direction: row;
+        justify-content: space-between;
+        display: flex;
+    }
+    .movieTitle{
+        font-size: 40pt;
+        margin: 0px 0px 10px 0px;
+        color:#292929;
+        font-family: 'DIN Pro Black', sans-serif;
+        text-decoration: none;
+    }
+    .movieFirstBlock{
+        margin: 30px 0px;
+        flex-direction: row;
+        display: flex;
+        justify-content: space-between;
+    }
+    .movieGenres{
+        font-family: 'DIN Pro Bold';
+        font-size: 15pt;
+        margin: 5px 0px;
+    }
+    .movieStats{
+        margin: 0px 270px 0px 0px;
+        justify-content: end;
+        flex-direction: column;
+        display: flex;
+        font-size: 20pt;
+    }
+    .movieDescriptionText{
+        font-size: 15pt;
+        width: 900px;
+    }
+    .movieBlockTitle{
+        font-size: 15pt;
+        font-family: 'DIN Pro Bold';
+        margin: 10px 0px;
+    }
+    .sessionPage{
+        justify-content: row;
+        display: flex;
+    }
+    .moviesPage{
+        justify-content: row;
+        display: flex;
+    }
+    .filterWrapper{
+        width: 200px;
+        margin: 35px 0px 0px 20px;
+        height: fit-content;
+        padding: 10px;
+        background-color: #d3f6df;
+        border-radius: 20px;
+        position: sticky;
+    }
+    #filterInput{
+        border-radius: 8px;
+        border: none;
+        font-family: 'DIN Pro Regular';
+        width: 100px;
+        margin: 0px 8px;
+    }
+    #filterButton{
+        width: fit-content;
+        font-family: 'DIN Pro Regular', sans-serif;
+        padding: 6px 30px;
+        align-self: center;
+        display: flex;
+        margin: 5px;
+        font-size: 10pt;
+        background-color: #f5f5f5;
+        color: #464646;
+        border-radius: 10px;
+        border: none;
+        cursor: pointer;
+    }
+    .inputDescription{
+        width: 50px;
+        display: flex;
+        justify-content: end;
+    }
+    .priceFilter{
+        margin: 5px;
+    }
+    .inputBlock{
+        margin: 10px 0px;
+        display: flex;
+        flex-direction: row;
+    }
+    .filterSeparator{
+        background-color: #97edb6;
+        margin: 8px 0px;
+        width: 200px;
+        height: 3px;
+    }
+    .newestMovies{
+        display: flex;
+        flex-direction: row;  
+        background-color: #edfff4;
+        width:900px;
+        padding: 15px;
+        border-radius: 10px;
+    }
+    .homePageMovie{
+        margin: 0px 30px 0px 0px;
+        display: flex;
+        flex-direction: column;
+    }
+    .homeMovieTitle{
+        font-size: 23pt;
+        font-family: 'DIN Pro Bold';
+        margin: 5px 0px;
+    }
+    .homeBlockTitle{
+        font-size: 25pt;
+        font-family: 'DIN Pro Bold';
+        margin: 5px 0px;
     }
 </style>
 <body>

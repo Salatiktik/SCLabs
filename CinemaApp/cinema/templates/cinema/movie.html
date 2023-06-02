@@ -1,0 +1,79 @@
+{% extends 'cinema/base.html' %}
+{% block title %}Sessions page{% endblock %}
+{% block content %}
+<div>
+    <div id="player"></div>
+    <div class = "pageTitle"></div>
+    <div class = "movieTitle">
+        {{movie}}
+    </div>
+    <div class = "movieFirstBlock">
+        <img src = "{{movie.poster.url}}" class="moviePoster">
+        <div class="movieStats">
+            <div>
+                Country: {{movie.country}}
+            </div>
+            <div>
+                Budget: {{movie.budget}} $
+            </div>
+            <div>
+                Duration: {{movie.duration.hour}}:{{movie.duration.minute}}:00
+            </div>
+            <div>
+                Genres: 
+                {% for genre in movie.genre.all %}
+                    {{genre}}
+                {% endfor %}
+            </div>
+
+        </div>
+        <div class = "rating">
+            {{movie.rating}} ★
+        </div>
+
+    </div>
+    <div class="movieBlockTitle">
+        Descripton:
+    </div>
+    <div class="movieDescriptionText">
+        {{movie.description}}
+    </div>
+    <div class="movieBlockTitle">
+        Sessions:
+    </div>
+    {% for day in sessions%}
+    {% if day.0 %}
+    <div class = "dateSession">{{day.0.startDate}}</div>
+    <div class ="dateSessionWrapper">
+        <div class="sessionMovieTitle">
+            {{movie}}
+        </div>
+        {% for session in day%}
+        {% if user.is_authenticated %}
+        <a href="{% url 'session' session_id=session.id %}">
+            <button class="sessionButton">
+                {{session.startTime.hour}}:{%if session.startTime.minute == 0 %}00{%else%}{{session.startTime.minute}}{%endif%} /
+                {{session.type}} /
+                {{session.price}} $
+            </button>
+        </a>
+        {% else %}
+        <a href="/login">
+            <button class="sessionButton">
+                {{session.startTime.hour}}:{%if session.startTime.minute == 0 %}00{%else%}{{session.startTime.minute}}{%endif%} /
+                {{session.type}} /
+                {{session.price}} $
+            </button>
+        </a>
+        {% endif %}
+        {%endfor%}
+    </div>
+    {% endif%}
+    {% endfor %}
+    <div class="movieBlockTitle">
+        Trailer:
+    </div>
+    <iframe src = "http://www.youtube.com/embed/{{movie.trailerId}}?enablejsapi=1&origin=http://example.com" type="text/html" width="980" height="550" frameborder="0"></iframe>
+    
+</div>
+{% endblock %}

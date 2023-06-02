@@ -3,13 +3,61 @@
 {% block content %}
 <div>
     <div class = "pageTitle">Movies</div>
-    {% for movie in movies%}
-        <div class = "movieBlock">
-            <div>
-                <img src = "{{movie.poster.url}}">
-            </div>
-            {{movie}}
+    <div class="moviesPage">
+        <div>
+            {% for movie in movies%}
+            <a class = "nonHeaderLink" href = "{% url 'movie' movie_id=movie.id %}">
+                <div class = "movieBlock">
+                    <img src = "{{movie.poster.url}}" class="moviePoster">
+                    <div class = "movieDescription">
+                        <div class = "movieTitle">
+                            {{movie}}
+                        </div>
+                        <div class="movieGenres">
+                            {% for genre in movie.genre.all %}
+                                {{genre}}
+                            {% endfor %}
+                        </div>
+                        <div>
+                            {{movie.description}}
+                        </div>
+                    </div>
+                    <div class = "rating">
+                        {{movie.rating}} ★
+                    </div>
+                </div>
+            </a>
+            {% endfor %}
         </div>
-    {% endfor %}
+        <form method="get" class="filterWrapper" id="filterForm">
+            <div class="priceFilter">
+                <div class="detailTextDark">Rating</div>
+                <div class="inputBlock">
+                    <div class="inputDescription">from:</div> 
+                    <input type="number" name="rfrom" id="filterInput" step = '0.01' value="{{rfrom}}" min ="0" max="10">
+                </div>
+                <div class="inputBlock">
+                    <div class="inputDescription">to:</div>
+                    <input type="number" name="rto" id="filterInput" step = '0.01' value="{{rto}}" min ="0" max="10">
+                </div>
+            </div>
+            <div class="filterSeparator"></div>
+            <div class="formatFilter">
+                <div class="detailTextDark">Genres</div>
+                {%for genre in genres%}
+                <div class="inputBlock">
+                    <input type="checkbox" name="{{genre}}checkbox">
+                    <div class="inputGenre">{{genre}}</div>
+                </div>
+                {%endfor%}
+            </div>
+            <div class="inputBlock">
+                <input type="submit" value="Filter" id="filterButton">
+                <a href = "/movies" id="filterButton">
+                    Reset
+                </a>
+            </div>
+        </form>
+    </div>
 </div>
 {% endblock %}

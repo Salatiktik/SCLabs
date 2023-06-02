@@ -3,7 +3,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User 
 
 class LoginForm(forms.Form):
-    username = forms.CharField(max_length=30,widget=forms.TextInput({'class': 'input','type':'password'}))
+    username = forms.CharField(max_length=30)
     password = forms.CharField(widget=forms.PasswordInput())
 
 

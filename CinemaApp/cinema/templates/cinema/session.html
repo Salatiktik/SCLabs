@@ -3,7 +3,7 @@
 {% block content %}
 <div>
     <div class = "pageTitle">{{movie}}:{{session.type}}</div>
-    <div class = "dateSession">{{session.startTime}}</div>
+    <div class = "dateSession">{{session.startDate}},{{session.startTime}}</div>
     <div class = "seatsBlock">
         <div class="holeName">{{session.hall.name}}</div>
         {%for row in seats%}

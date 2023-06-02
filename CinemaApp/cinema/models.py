@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth import get_user_model
+import re
 
 # Create your models here.
 
@@ -14,13 +15,19 @@ class Genre(models.Model):
 class Movie(models.Model):
     name = models.CharField(max_length=30)
     country = models.CharField(max_length=20)
-    genre = models.ManyToManyField(Genre)
+    genre = models.ManyToManyField(Genre, related_name="movie")
     duration = models.TimeField()
     budget = models.FloatField()
     poster = models.ImageField()
     description = models.CharField(max_length=1000)
     rating = models.FloatField()
     trailerUrl = models.CharField(max_length=50)
+
+    @property
+    def trailerId(self):
+        regEx = r"^.*((youtu\.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*"
+        match = re.search(regEx,self.trailerUrl)
+        return match.group(7)
 
     def __str__(self):
         return self.name
@@ -68,7 +75,8 @@ class Seat(models.Model):
 
 class Session(models.Model):
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
-    startTime = models.DateTimeField()
+    startTime = models.TimeField()
+    startDate = models.DateField()
     hall = models.ForeignKey(Hall, on_delete=models.CASCADE)
     price = models.FloatField()
     type = models.CharField(
